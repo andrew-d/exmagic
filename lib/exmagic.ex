@@ -56,7 +56,7 @@ defmodule ExMagic do
   ##################################################
   ## HELPER FUNCTIONS
 
-  @spec nif_from_buffer() :: String.t
+  @spec magic_path() :: String.t
   defp magic_path do
     Application.app_dir(:exmagic, "priv/magic.mgc")
   end
