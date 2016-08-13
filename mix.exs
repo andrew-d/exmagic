@@ -27,7 +27,8 @@ defmodule ExMagic.Mixfile do
 
   defp deps do
     [
-      {:libmagic, git: "https://github.com/file/file", tag: "FILE5_28", app: false, compile: false}
+      {:libmagic, git: "https://github.com/file/file", tag: "FILE5_28", app: false, compile: false},
+      {:dialyxir, "~> 0.3.5", only: :dev},
     ]
   end
 end

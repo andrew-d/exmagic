@@ -7,14 +7,22 @@ defmodule ExMagicTest do
     png_str = "89504E470D0A1A0A0000000D4948445200000001000000010100000000376EF9240000001049444154789C626001000000FFFF03000006000557BFABD40000000049454E44AE426082"
     png = Base.decode16!(png_str)
 
-    assert ExMagic.from_buffer(png) == "image/png"
+    assert ExMagic.from_buffer(png) == {:ok, "image/png"}
   end
 
   test "from_binary invalid" do
-    assert ExMagic.from_buffer("blah") == "text/plain"
+    assert ExMagic.from_buffer("blah") == {:ok, "text/plain"}
   end
 
   test "from_binary blank" do
-    assert ExMagic.from_buffer("") == "application/x-empty"
+    assert ExMagic.from_buffer("") == {:ok, "application/x-empty"}
+  end
+
+  test "from_binary with char list" do
+    assert ExMagic.from_buffer('foo') == {:ok, "text/plain"}
+  end
+
+  test "from_binary!" do
+    assert ExMagic.from_buffer!("foo") == "text/plain"
   end
 end
