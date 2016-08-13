@@ -55,4 +55,8 @@ env:
 	@echo "LIBMAGIC_PATH = $(LIBMAGIC_PATH)"
 
 clean:
-	$(RM) $(OUT_DIR)/exmagic.so* $(OUT_DIR)/exmagic.o $(OUT_DIR)/*.stamp
+	$(RM) \
+		$(OUT_DIR)/exmagic.so* \
+		$(OUT_DIR)/exmagic.o \
+		$(OUT_DIR)/*.stamp \
+		$(OUT_DIR)/magic.mgc
