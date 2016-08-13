@@ -81,11 +81,11 @@ cstr_to_binary(ErlNifEnv *env, const char *cstr, ErlNifBinary *buf, ERL_NIF_TERM
  * The returned cookie should be freed with `magic_close`.
  */
 static magic_t
-open_magic_database(ErlNifEnv *env, char *dbpath, ERL_NIF_TERM *ret) {
+open_magic_database(ErlNifEnv *env, int flags, char *dbpath, ERL_NIF_TERM *ret) {
   magic_t cookie;
 
   /* Create a libmagic handle */
-  cookie = magic_open(MAGIC_MIME_TYPE);
+  cookie = magic_open(flags);
   if (NULL == cookie) {
     *ret = enif_make_tuple2(
       env,
@@ -139,7 +139,7 @@ from_buffer(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
   }
 
   /* Create a libmagic handle */
-  magic_cookie = open_magic_database(env, dbstr, &ret);
+  magic_cookie = open_magic_database(env, MAGIC_MIME_TYPE, dbstr, &ret);
   if (NULL == magic_cookie) {
     /* ret set by above function */
     goto cleanup;
@@ -208,7 +208,7 @@ from_file(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
   }
 
   /* Create a libmagic handle */
-  magic_cookie = open_magic_database(env, dbstr, &ret);
+  magic_cookie = open_magic_database(env, MAGIC_MIME_TYPE, dbstr, &ret);
   if (NULL == magic_cookie) {
     /* ret set by above function */
     goto cleanup;
