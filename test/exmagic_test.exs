@@ -25,4 +25,16 @@ defmodule ExMagicTest do
   test "from_binary!" do
     assert ExMagic.from_buffer!("foo") == "text/plain"
   end
+
+  test "from_file" do
+    assert ExMagic.from_file("kitten.jpg") == {:ok, "image/jpeg"}
+  end
+
+  test "from_file!" do
+    assert ExMagic.from_file!("kitten.jpg") == "image/jpeg"
+  end
+
+  test "from_file nonexistent file" do
+    assert ExMagic.from_file("nonexistent.file") == {:error, :file_does_not_exist}
+  end
 end

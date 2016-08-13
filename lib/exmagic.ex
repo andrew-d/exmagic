@@ -55,6 +55,30 @@ defmodule ExMagic do
     magic
   end
 
+  @doc """
+  Retrieves magic information from the given file.
+  """
+  @spec from_file(String.t) :: {:ok, binary} | {:error, atom}
+  def from_file(path) do
+    if File.exists?(path) do
+      nif_from_file(
+        path,
+        magic_path()
+      )
+    else
+      {:error, :file_does_not_exist}
+    end
+  end
+
+  @doc """
+  Retrieves magic information from the given file.  Fails on an error.
+  """
+  @spec from_file!(String.t) :: binary
+  def from_file!(path) do
+    {:ok, magic} = from_file(path)
+    magic
+  end
+
   ##################################################
   ## HELPER FUNCTIONS
 
@@ -68,6 +92,11 @@ defmodule ExMagic do
 
   @doc false
   def nif_from_buffer(_buf, _magic_path) do
+    exit(:nif_not_loaded)
+  end
+
+  @doc false
+  def nif_from_file(_file, _magic_path) do
     exit(:nif_not_loaded)
   end
 end
