@@ -4,6 +4,8 @@ defmodule ExMagic.Mixfile do
   def project do
     [app: :exmagic,
      version: "0.0.1",
+     name: "ExMagic",
+     source_url: "https://github.com/andrew-d/exmagic",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -27,8 +29,13 @@ defmodule ExMagic.Mixfile do
 
   defp deps do
     [
+      # This is a non-Elixir dependency that we have Mix fetch.  We use this to
+      # compile libmagic into our NIF's shared object.
       {:libmagic, git: "https://github.com/file/file", tag: "FILE5_28", app: false, compile: false},
+
+      # Development / testing dependencies
       {:dialyxir, "~> 0.3.5", only: :dev},
+      {:ex_doc, "~> 0.12", only: :dev},
     ]
   end
 end

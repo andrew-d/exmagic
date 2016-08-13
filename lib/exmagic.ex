@@ -21,8 +21,8 @@ defmodule ExMagic do
 
   ## Examples
 
-    iex> ExMagic.from_buffer("foo")
-    {:ok, "text/plain"}
+      iex> ExMagic.from_buffer("foo")
+      {:ok, "text/plain"}
   """
   @spec from_buffer(binary) :: {:ok, binary} | {:error, atom}
   @spec from_buffer(List.t) :: {:ok, binary} | {:error, atom}
@@ -45,8 +45,8 @@ defmodule ExMagic do
 
   ## Examples
 
-    iex> ExMagic.from_buffer!("foo")
-    "text/plain"
+      iex> ExMagic.from_buffer!("foo")
+      "text/plain"
   """
   @spec from_buffer!(binary) :: binary
   @spec from_buffer!(List.t) :: binary
