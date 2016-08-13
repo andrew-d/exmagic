@@ -22,8 +22,9 @@ LIBMAGIC_AR := $(LIBMAGIC_PATH)/src/.libs/libmagic.a
 
 all: $(OUT_DIR)/exmagic.so $(OUT_DIR)/magic.mgc
 
-$(OUT_DIR)/exmagic.o: c_src/exmagic.c | $(OUT_DIR)
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+# Note: need to run the build to create the header file
+$(OUT_DIR)/exmagic.o: c_src/exmagic.c $(OUT_DIR)/libmagic.stamp | $(OUT_DIR)
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ c_src/exmagic.c
 
 $(OUT_DIR)/exmagic.so: $(OUT_DIR)/exmagic.o $(OUT_DIR)/libmagic.stamp | $(OUT_DIR)
 	$(CC) $(CFLAGS) -shared $(LDFLAGS) -o $@ $(OUT_DIR)/exmagic.o $(LIBMAGIC_AR)
@@ -49,8 +50,10 @@ $(OUT_DIR):
 ## UTIL
 
 env:
-	@echo "ERLANG_PATH   = $(ERLANG_PATH)"
 	@echo "CFLAGS        = $(CFLAGS)"
+	@echo "CPPFLAGS      = $(CFPPLAGS)"
+	@echo "LDFLAGS       = $(LDFLAGS)"
+	@echo "ERLANG_PATH   = $(ERLANG_PATH)"
 	@echo "OUT_DIR       = $(OUT_DIR)"
 	@echo "LIBMAGIC_PATH = $(LIBMAGIC_PATH)"
 

@@ -27,9 +27,10 @@ cache:
 addons:
   apt:
     packages:
-      - file
-      - git
-      - gcc
-      - make
       - autoconf
       - automake
+      - file
+      - gcc
+      - git
+      - make
+      - tree

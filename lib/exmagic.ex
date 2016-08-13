@@ -3,13 +3,15 @@ defmodule ExMagic do
   Binding to libmagic to gather information about a file.
   """
 
+  # Path to our directory containing the NIF shared object and magic database.
+  @priv_dir Path.join(Path.expand("../", __DIR__), "priv")
+
   # Run the given function when the VM loads.
   @on_load :init
 
   @doc false
   def init do
-    # Load the NIF on the path to the library
-    path = Application.app_dir(:exmagic, "priv/exmagic") |> String.to_char_list
+    path = Path.join(@priv_dir, "exmagic") |> String.to_char_list
     :ok = :erlang.load_nif(path, 0)
   end
 
@@ -58,7 +60,7 @@ defmodule ExMagic do
 
   @spec magic_path() :: String.t
   defp magic_path do
-    Application.app_dir(:exmagic, "priv/magic.mgc")
+    Path.join(@priv_dir, "magic.mgc")
   end
 
   ##################################################
