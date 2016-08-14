@@ -10,8 +10,15 @@ LIBMAGIC_PATH := $(shell pwd)/deps/libmagic
 # Set up compiler flags
 CFLAGS := -g -O3 -fPIC -ansi -pedantic -Wall -Wextra -Wno-unused-parameter
 CPPFLAGS := -I$(ERLANG_PATH) -I$(LIBMAGIC_PATH)/src
-LDFLAGS := #-L$(LIBMAGIC_PATH) -lmagic
+LDFLAGS := -lz #-L$(LIBMAGIC_PATH) -lmagic
 
+
+############################################################
+## PLATFORM-SPECIFIC
+
+ifeq ($(shell uname),Darwin)
+LDFLAGS += -undefined dynamic_lookup -dynamiclib
+endif
 
 ############################################################
 ## RULES
