@@ -35,8 +35,8 @@ defmodule ExMagic.Mixfile do
       {:libmagic, git: "https://github.com/file/file", tag: "FILE5_28", app: false, compile: false},
 
       # Development / testing dependencies
-      {:dialyxir, "~> 0.3.5", only: :dev},
-      {:ex_doc, "~> 0.12", only: :dev},
+      {:dialyxir, "~> 0.3.5", only: :test},
+      {:ex_doc, "~> 0.12", only: :docs},
     ]
   end
 end
