@@ -2,17 +2,19 @@ defmodule ExMagic.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :exmagic,
-     version: "0.0.1",
-     name: "ExMagic",
-     source_url: "https://github.com/andrew-d/exmagic",
-     homepage_url: "https://andrew-d.github.io/exmagic/",
-     elixir: "~> 1.0",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     compilers: [:make, :elixir, :app],
-     aliases: aliases(),
-     deps: deps()]
+    [
+      app: :exmagic,
+      version: "0.0.1",
+      name: "ExMagic",
+      source_url: "https://github.com/andrew-d/exmagic",
+      homepage_url: "https://andrew-d.github.io/exmagic/",
+      elixir: "~> 1.0",
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      compilers: [:make, :elixir, :app],
+      aliases: aliases(),
+      deps: deps(),
+    ]
   end
 
   defp aliases do
@@ -48,8 +50,12 @@ defmodule Mix.Tasks.Compile.Make do
   @shortdoc "Compiles helper in c_src"
 
   def run(_) do
-    {result, _error_code} = System.cmd("make", [], stderr_to_stdout: true)
-    Mix.shell.info result
+    if match? {:win32, _}, :os.type do
+      exit(:not_supported)
+    else
+      {result, _error_code} = System.cmd("make", [], stderr_to_stdout: true)
+      Mix.shell.info result
+    end
 
     :ok
   end

@@ -76,7 +76,7 @@ env:
 	@echo "LIBMAGIC_PATH = $(LIBMAGIC_PATH)"
 
 clean:
-	$(MAKE) -C $(LIBMAGIC_PATH) clean
+	$(MAKE) -C $(LIBMAGIC_PATH) clean || true
 	$(RM) \
 		$(OUT_DIR)/exmagic.so* \
 		$(OUT_DIR)/exmagic.o \
