@@ -1,0 +1,1 @@
+sidebarNodes={"exceptions":[],"extras":[{"id":"api-reference","title":"API Reference","headers":[]}],"modules":[{"id":"ExMagic","title":"ExMagic","functions":[{"id":"from_buffer/1","anchor":"from_buffer/1"},{"id":"from_buffer!/1","anchor":"from_buffer!/1"},{"id":"from_file/1","anchor":"from_file/1"},{"id":"from_file!/1","anchor":"from_file!/1"}]}],"protocols":[]}
