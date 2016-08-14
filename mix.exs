@@ -6,6 +6,7 @@ defmodule ExMagic.Mixfile do
      version: "0.0.1",
      name: "ExMagic",
      source_url: "https://github.com/andrew-d/exmagic",
+     homepage_url: "https://andrew-d.github.io/exmagic/",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

@@ -14,13 +14,23 @@ otp_release:
   - 18.1
 
 env:
-  - MIX_ENV=test
+  global:
+    - MIX_ENV=test
+    - secure: SGunpvFb2ZU3z3ard9y8/gORqlhIG3bG6zj0+umxNqPPMxtKjMQDbfumT44o4WICY8bYe5Nlx0g2Zkue5BYfhsV2K0tVgfNjeYQAn8KAJVmXT4Gs0uRQ7kCO4acGJHf0m5nDzhGe4irQkhUbfmDA7jjd2vFYHhPa5Ui88PQeEDSP7CXVHpwNiXmZ8vxfGIQEBEGrpz2N1ub4lYk2E4lc4cbQyTi9mbunpJrVoKUAZKcXjuoppScYDnlQsrjmdvlItUOYxIdEY4z6dWRpJv4YuY+Ln+O/c3IT3SXYrZnLO0YZFSAKHw/NHcix/XdRBgsx3h0qLMdVe2N65fNzu87re2JUD6JsHYsTHEEG5Io0+Z6YpKgu7+yKtdFcw+zvIKKMipKCqCzw1MaJSX8IiVO9YjWsnvO/ppuYIH5jUczXhufJYH1EtbgqgFrFzKKvIU9+3GkiPg+bfVdJdQvcMzpiqKgObDDgKOWOqqGe756Ualtkb5fcYaf+XadP4Dk33hIvXo5k9Tj55vlFI6SiC7n7Cj7SSnHRl/xvlmz3V1R/ZF3XrpRIhz94u+GY4av93i2she+ZHZYQIjwJFZNpHkNt/HAoxkoxVJtC4LrGrV+vt9+SFGog/KCUxqu/Vh/OrJYQ6kdEnMxz8Fep0Xqo+WRUDzSKSq9bGlp7ktgm0A6aD1I=
 
-# Speed up the build
+# After we succeed, build docs and upload
+after_success:
+  - mix docs
+  - |
+      test ${TRAVIS_PULL_REQUEST} == "false" && \
+      test ${TRAVIS_BRANCH} == "master" && \
+      test "${TRAVIS_BUILD_NUMBER}.1" == "${TRAVIS_JOB_NUMBER}" && \
+      ./push-docs.sh
+
+# Speed up the build by caching our dependencies
 cache:
   directories:
     - deps
-    - _build
 
 # Need the file(1) command to build libmagic itself, and the bits necessary to
 # build libmagic.
