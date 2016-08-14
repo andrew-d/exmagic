@@ -5,7 +5,18 @@ ERLANG_PATH := $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir()
 
 # Other directory paths
 OUT_DIR := priv
-LIBMAGIC_PATH := $(shell pwd)/deps/libmagic
+
+# NOTE: This is necessary due to the way that Mix builds projects.  When we're
+# building ExMagic by itself, the `deps` directory will be nested inside the
+# `exmagic` directory.  However, when ExMagic is included in another project,
+# the `exmagic` directory is located in the top-level `deps` directory, next to
+# the `libmagic` directory.
+ifeq ($(wildcard deps/libmagic),)
+	LIBMAGIC_PATH := ../libmagic
+else
+	LIBMAGIC_PATH := $(shell pwd)/deps/libmagic
+endif
+
 
 # Set up compiler flags
 CFLAGS := -g -O3 -fPIC -ansi -pedantic -Wall -Wextra -Wno-unused-parameter
@@ -65,6 +76,7 @@ env:
 	@echo "LIBMAGIC_PATH = $(LIBMAGIC_PATH)"
 
 clean:
+	$(MAKE) -C $(LIBMAGIC_PATH) clean
 	$(RM) \
 		$(OUT_DIR)/exmagic.so* \
 		$(OUT_DIR)/exmagic.o \
