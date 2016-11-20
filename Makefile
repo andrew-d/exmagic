@@ -17,6 +17,9 @@ else
 	LIBMAGIC_PATH := $(shell pwd)/deps/libmagic
 endif
 
+LIBMAGIC_VERSION := $(shell cat .file-version)
+LIBMAGIC_STAMP := $(OUT_DIR)/libmagic-$(LIBMAGIC_VERSION).stamp
+
 
 # Set up compiler flags
 CFLAGS := -g -O3 -fPIC -ansi -pedantic -Wall -Wextra -Wno-unused-parameter
@@ -41,13 +44,13 @@ LIBMAGIC_AR := $(LIBMAGIC_PATH)/src/.libs/libmagic.a
 all: $(OUT_DIR)/exmagic.so $(OUT_DIR)/magic.mgc
 
 # Note: need to run the build to create the header file
-$(OUT_DIR)/exmagic.o: c_src/exmagic.c $(OUT_DIR)/libmagic.stamp | $(OUT_DIR)
+$(OUT_DIR)/exmagic.o: c_src/exmagic.c $(LIBMAGIC_STAMP) | $(OUT_DIR)
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ c_src/exmagic.c
 
-$(OUT_DIR)/exmagic.so: $(OUT_DIR)/exmagic.o $(OUT_DIR)/libmagic.stamp | $(OUT_DIR)
+$(OUT_DIR)/exmagic.so: $(OUT_DIR)/exmagic.o $(LIBMAGIC_STAMP) | $(OUT_DIR)
 	$(CC) $(CFLAGS) -shared $(LDFLAGS) -o $@ $(OUT_DIR)/exmagic.o $(LIBMAGIC_AR)
 
-$(OUT_DIR)/libmagic.stamp: | $(OUT_DIR)
+$(LIBMAGIC_STAMP): | $(OUT_DIR)
 	cd $(LIBMAGIC_PATH) && autoreconf -i
 	cd $(LIBMAGIC_PATH) && ./configure \
 		--disable-dependency-tracking \
@@ -57,7 +60,7 @@ $(OUT_DIR)/libmagic.stamp: | $(OUT_DIR)
 	$(MAKE) -C $(LIBMAGIC_PATH)
 	@touch $@
 
-$(OUT_DIR)/magic.mgc: $(OUT_DIR)/libmagic.stamp | $(OUT_DIR)
+$(OUT_DIR)/magic.mgc: $(LIBMAGIC_STAMP) | $(OUT_DIR)
 	cp $(LIBMAGIC_PATH)/magic/magic.mgc $@
 
 $(OUT_DIR):
@@ -68,12 +71,13 @@ $(OUT_DIR):
 ## UTIL
 
 env:
-	@echo "CFLAGS        = $(CFLAGS)"
-	@echo "CPPFLAGS      = $(CFPPLAGS)"
-	@echo "LDFLAGS       = $(LDFLAGS)"
-	@echo "ERLANG_PATH   = $(ERLANG_PATH)"
-	@echo "OUT_DIR       = $(OUT_DIR)"
-	@echo "LIBMAGIC_PATH = $(LIBMAGIC_PATH)"
+	@echo "CFLAGS           = $(CFLAGS)"
+	@echo "CPPFLAGS         = $(CFPPLAGS)"
+	@echo "LDFLAGS          = $(LDFLAGS)"
+	@echo "ERLANG_PATH      = $(ERLANG_PATH)"
+	@echo "OUT_DIR          = $(OUT_DIR)"
+	@echo "LIBMAGIC_PATH    = $(LIBMAGIC_PATH)"
+	@echo "LIBMAGIC_VERSION = $(LIBMAGIC_VERSION)"
 
 clean:
 	$(MAKE) -C $(LIBMAGIC_PATH) clean || true

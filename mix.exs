@@ -35,7 +35,7 @@ defmodule ExMagic.Mixfile do
   defp package do
     [
       name: :exmagic,
-      files: ["c_src", "lib", "mix.exs", "README*", "LICENSE*"],
+      files: ["c_src", "lib", "mix.exs", "README*", "LICENSE*", ".file-version"],
       maintainers: ["Andrew Dunham"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/andrew-d/exmagic",
@@ -44,15 +44,27 @@ defmodule ExMagic.Mixfile do
   end
 
   defp deps do
+    version = File.read!(".file-version")
+    |> ExMagic.Mixfile.trim
+    |> String.replace(".", "_")
+
     [
       # This is a non-Elixir dependency that we have Mix fetch.  We use this to
       # compile libmagic into our NIF's shared object.
-      {:libmagic, git: "https://github.com/file/file", tag: "FILE5_29", app: false, compile: false},
+      {:libmagic, git: "https://github.com/file/file", tag: "FILE#{version}", app: false, compile: false},
 
       # Development / testing dependencies
       {:dialyxir, "~> 0.3.5", only: :test},
       {:ex_doc, "~> 0.12", only: :docs},
     ]
+  end
+
+  def trim(s) do
+    if :erlang.function_exported(String, :trim, 1) do
+      String.trim(s)
+    else
+      String.strip(s)
+    end
   end
 end
 
