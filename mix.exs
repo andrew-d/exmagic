@@ -4,7 +4,9 @@ defmodule ExMagic.Mixfile do
   def project do
     [
       app: :exmagic,
+      description: "Wrapper around libmagic",
       version: "0.0.2",
+      package: package(),
       name: "ExMagic",
       source_url: "https://github.com/andrew-d/exmagic",
       homepage_url: "https://andrew-d.github.io/exmagic/",
@@ -28,6 +30,17 @@ defmodule ExMagic.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     []
+  end
+
+  defp package do
+    [
+      name: :exmagic,
+      files: ["c_src", "lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Andrew Dunham"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/andrew-d/exmagic",
+               "Docs" => "https://andrew-d.github.io/exmagic/"},
+    ]
   end
 
   defp deps do
