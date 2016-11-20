@@ -4,7 +4,7 @@ defmodule ExMagic.Mixfile do
   def project do
     [
       app: :exmagic,
-      version: "0.0.1",
+      version: "0.0.2",
       name: "ExMagic",
       source_url: "https://github.com/andrew-d/exmagic",
       homepage_url: "https://andrew-d.github.io/exmagic/",
