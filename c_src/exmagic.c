@@ -248,6 +248,30 @@ cleanup:
 
 
 /**
+ * Returns the version of libmagic in use.
+ */
+static ERL_NIF_TERM
+version(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]) {
+    ERL_NIF_TERM ret;
+
+    if (argc != 0) {
+      ret = enif_make_badarg(env);
+      goto cleanup;
+    }
+
+    ret = enif_make_int(
+      env,
+      magic_version()
+    );
+
+cleanup:
+
+    return ret;
+}
+
+
+
+/**
  * Function definitions for our NIF.
  */
 static ErlNifFunc
@@ -255,6 +279,7 @@ nif_funcs[] = {
   /* {erl_function_name, erl_function_arity, c_function, flags} */
   {"nif_from_buffer",   2,  from_buffer,    0},
   {"nif_from_file",     2,  from_file,      0},
+  {"version",           0,  version,        0},
 };
 
 

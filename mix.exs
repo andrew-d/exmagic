@@ -34,7 +34,7 @@ defmodule ExMagic.Mixfile do
     [
       # This is a non-Elixir dependency that we have Mix fetch.  We use this to
       # compile libmagic into our NIF's shared object.
-      {:libmagic, git: "https://github.com/file/file", tag: "FILE5_28", app: false, compile: false},
+      {:libmagic, git: "https://github.com/file/file", tag: "FILE5_29", app: false, compile: false},
 
       # Development / testing dependencies
       {:dialyxir, "~> 0.3.5", only: :test},

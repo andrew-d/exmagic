@@ -79,6 +79,19 @@ defmodule ExMagic do
     magic
   end
 
+  @doc """
+  Returns the version of libmagic in use.
+
+  ## Examples
+
+      iex> ExMagic.version()
+      529
+  """
+  @spec version() :: Integer.t
+  def version() do
+    exit(:nif_not_loaded)
+  end
+
   ##################################################
   ## HELPER FUNCTIONS
 
