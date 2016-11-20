@@ -45,8 +45,8 @@ defmodule ExMagic.Mixfile do
 
   defp deps do
     version = File.read!(".file-version")
-    |> ExMagic.Mixfile.trim
-    |> String.replace(".", "_")
+              |> ExMagic.Mixfile.trim
+              |> String.replace(".", "_")
 
     [
       # This is a non-Elixir dependency that we have Mix fetch.  We use this to
