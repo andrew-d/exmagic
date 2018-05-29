@@ -1,6 +1,10 @@
 defmodule ExMagic.Mixfile do
   use Mix.Project
 
+  def __before_compile__(env) do
+    Module.delete_attribute(env.module, :shortdoc)
+  end
+
   def project do
     [
       app: :exmagic,
@@ -67,7 +71,11 @@ end
 # Makefile tasks
 
 defmodule Mix.Tasks.Compile.Make do
-  @doc "Compiles helper in c_src"
+  # suppress warning about @shortdoc
+  quote do
+    @before_compile ExMagic.Mixfile
+    @shortdoc "Compiles helper in c_src"
+  end
 
   def run(_) do
     if match?({:win32, _}, :os.type()) do
@@ -82,10 +90,14 @@ defmodule Mix.Tasks.Compile.Make do
 end
 
 defmodule Mix.Tasks.Clean.Make do
-  @doc "Cleans helper in c_src"
+  # suppress warning about @shortdoc
+  quote do
+    @before_compile ExMagic.Mixfile
+    @shortdoc "Cleans helper in c_src"
+  end
 
   def run(_) do
-    {result, _error_code} = System.cmd("make", ['clean'], stderr_to_stdout: true)
+    {result, _error_code} = System.cmd("make", ["clean"], stderr_to_stdout: true)
     Mix.shell().info(result)
 
     :ok
