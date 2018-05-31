@@ -3,10 +3,8 @@ sudo: false
 
 # Elixir versions
 elixir:
-  - 1.0.5
-  - 1.1.1
-  - 1.2.6
   - 1.3.4
+  - 1.6.4
 
 # Erlang versions
 otp_release:
@@ -17,10 +15,6 @@ otp_release:
 matrix:
   # Elixir 1.0 and 1.1 don't support Erlang 19
   exclude:
-    - elixir: 1.0.5
-      otp_release: 19.1
-    - elixir: 1.1.1
-      otp_release: 19.1
 
 env:
   global:
