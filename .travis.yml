@@ -8,9 +8,8 @@ elixir:
 
 # Erlang versions
 otp_release:
-  - 17.5
-  - 18.1
   - 19.1
+  - 20.0
 
 matrix:
   # Elixir 1.0 and 1.1 don't support Erlang 19
